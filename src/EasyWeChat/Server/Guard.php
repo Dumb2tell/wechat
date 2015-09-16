@@ -280,13 +280,15 @@ class Guard
     {
         $message = new Collection($message);
 
-        $response = false;
+        $response = $handler = null;
 
-        if ($message->get('MsgType') && $message->get('MsgType') === 'event' && $this->eventListener) {
-            $response = call_user_func_array($this->eventListener, [$message]);
-        } elseif (!empty($message['MsgId']) && $this->messageListener) {
-            $response = call_user_func_array($this->messageListener, [$message]);
+        if ($message->get('MsgType') && $message->get('MsgType') === 'event') {
+            $handler = $this->eventListener;
+        } elseif (!empty($message['MsgId'])) {
+            $handler = $this->messageListener;
         }
+
+        is_callable($handler) && $response = call_user_func_array($handler, [$message]);
 
         return $response;
     }
