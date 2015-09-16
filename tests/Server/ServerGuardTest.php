@@ -88,6 +88,7 @@ class ServerGuardTest extends TestCase
         });
         $encryptor->shouldReceive('decryptMsg')->andReturn([
                 'FromUserName' => 'oNlnUjq_uJdd52zt3OxFsJHEr_NY',
+                'ToUserName' => 't3OxFsJHEr_NY',
                 'CreateTime' => '1437865042',
                 'MsgType' => 'text',
                 'Content' => 'foobar',
