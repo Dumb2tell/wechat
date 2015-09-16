@@ -61,8 +61,8 @@ class Payment
     public function scheme($productId)
     {
         $params = [
-            'appid' => $this->merchant->appid,
-            'mch_id' => $this->merchant->mch_id,
+            'appid' => $this->merchant->app_id,
+            'mch_id' => $this->merchant->merchant_id,
             'time_stamp' => time(),
             'nonce_str' => uniqid(),
             'product_id' => $productId,

@@ -254,7 +254,7 @@ class Guard
      */
     protected function handleRequest()
     {
-        $message = $this->parseMessageFromRequest($this->request->getContent());
+        $message = $this->parseMessageFromRequest($this->request->getContent(false));
 
         if (empty($message)) {
             throw new BadRequestException('Invalid request.');
@@ -331,12 +331,12 @@ class Guard
     /**
      * Parse message array from raw php input.
      *
-     * @param string|resource $content
-     *
-     * @return array
+     * @param string $content
      *
      * @throws \EasyWeChat\Core\Exceptions\RuntimeException
      * @throws \EasyWeChat\Encryption\EncryptionException
+     *
+     * @return array
      */
     protected function parseMessageFromRequest($content)
     {
