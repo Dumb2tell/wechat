@@ -242,7 +242,7 @@ class Http
             $this->thorwException($contents['errmsg'], $contents['errcode']);
         }
 
-        if (isset($contents['errcode']) && $contents['errcode'] === self::HTTP_RESPONSE_ERROR_NONE) {
+        if (isset($contents['errcode']) && $contents['errcode'] == self::HTTP_RESPONSE_ERROR_NONE) {
             return true;
         }
 
