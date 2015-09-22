@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Client.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -58,11 +62,11 @@ class Client
      */
     protected $request;
 
-    const USER_URL = 'https://api.weixin.qq.com/sns/userinfo';
-    const ACCESS_TOKEN_URL = 'https://api.weixin.qq.com/sns/oauth2/access_token';
+    const USER_URL          = 'https://api.weixin.qq.com/sns/userinfo';
+    const ACCESS_TOKEN_URL  = 'https://api.weixin.qq.com/sns/oauth2/access_token';
     const TOKEN_REFRESH_URL = 'https://api.weixin.qq.com/sns/oauth2/refresh_token';
-    const VALIDATE_URL = 'https://api.weixin.qq.com/sns/auth';
-    const AUTHORIZE_URL = 'https://open.weixin.qq.com/connect/oauth2/authorize';
+    const VALIDATE_URL      = 'https://api.weixin.qq.com/sns/auth';
+    const AUTHORIZE_URL     = 'https://open.weixin.qq.com/connect/oauth2/authorize';
 
     const LAST_SCOPE_SESSION_KEY = 'easywechat.oauth.last_redirect_scope';
 
@@ -90,10 +94,10 @@ class Client
      */
     public function __construct($appId, $secret, Request $request, Http $http)
     {
-        $this->appId = $appId;
-        $this->secret = $secret;
+        $this->appId   = $appId;
+        $this->secret  = $secret;
         $this->request = $request;
-        $this->http = $http->setExpectedException(OAuthHttpException::class);
+        $this->http    = $http->setExpectedException(OAuthHttpException::class);
     }
 
     /**
@@ -108,7 +112,7 @@ class Client
      */
     public function redirect($to, $scope = 'snsapi_userinfo')
     {
-        if (!in_array($scope, $this->scopes)) {
+        if (!in_array($scope, $this->scopes, true)) {
             throw new InvalidArgumentException("Invalid oauth scope:'$scope'");
         }
 
@@ -148,7 +152,7 @@ class Client
         $accessToken = $this->getAccessToken($this->getCode());
 
         // snsapi_base
-        if ($this->request->getSession()->get(self::LAST_SCOPE_SESSION_KEY) == 'snsapi_base') {
+        if ($this->request->getSession()->get(self::LAST_SCOPE_SESSION_KEY) === 'snsapi_base') {
             $user = $this->mapUserToObject(['openid' => $accessToken['openid']]);
         } else { // snsapi_userinfo
             $user = $this->mapUserToObject(
@@ -202,7 +206,7 @@ class Client
     {
         $queries = $this->getUserFields($openId, $accessToken);
 
-        return (array)$this->http->get(self::USER_URL, $queries);
+        return (array) $this->http->get(self::USER_URL, $queries);
     }
 
     /**
@@ -217,10 +221,10 @@ class Client
     protected function getCodeFields($redirectUrl, $scope, $state = null)
     {
         $fields = [
-            'appid' => $this->appId,
-            'redirect_uri' => $redirectUrl,
-            'scope' => $scope,
-            'state' => $state,
+            'appid'         => $this->appId,
+            'redirect_uri'  => $redirectUrl,
+            'scope'         => $scope,
+            'state'         => $state,
             'response_type' => 'code',
         ];
 
@@ -238,8 +242,8 @@ class Client
     protected function getUserFields($openId, $accessToken)
     {
         return [
-            'openid' => $openId,
-            'lang' => 'zh_CN',
+            'openid'       => $openId,
+            'lang'         => 'zh_CN',
             'access_token' => $accessToken,
         ];
     }
@@ -285,9 +289,9 @@ class Client
     protected function getTokenFields($code)
     {
         $params = [
-            'appid' => $this->appId,
-            'secret' => $this->secret,
-            'code' => $code,
+            'appid'      => $this->appId,
+            'secret'     => $this->secret,
+            'code'       => $code,
             'grant_type' => 'authorization_code',
         ];
 
@@ -304,8 +308,8 @@ class Client
     protected function getRefreshTokenFields($refreshToken)
     {
         $params = [
-            'appid' => $this->appId,
-            'grant_type' => 'refresh_token',
+            'appid'         => $this->appId,
+            'grant_type'    => 'refresh_token',
             'refresh_token' => $refreshToken,
         ];
 

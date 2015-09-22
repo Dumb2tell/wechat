@@ -1,12 +1,21 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use EasyWeChat\Message\Article;
 use EasyWeChat\Message\Articles;
 
 class MessageArticlesTest extends TestCase
 {
     /**
-     * Test item()
+     * Test item().
      */
     public function testItem()
     {
@@ -22,7 +31,7 @@ class MessageArticlesTest extends TestCase
     }
 
     /**
-     * Test items()
+     * Test items().
      */
     public function testItems()
     {
@@ -35,7 +44,7 @@ class MessageArticlesTest extends TestCase
 
         // closure
         $articles->clean();
-        $articles->items(function() use ($arrayItems) {
+        $articles->items(function () use ($arrayItems) {
             return $arrayItems;
         });
         $this->assertEquals($arrayItems, $articles->getItems());

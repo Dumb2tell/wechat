@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace
 {
     use EasyWeChat\Core\Http;
@@ -22,17 +31,18 @@ namespace
         }
 
         /**
-         * Test download()
+         * Test download().
          *
          * @expectedException EasyWeChat\Core\Exceptions\InvalidArgumentException
          */
         public function testDownload()
         {
-            $http = $this->getHttp();
+            $http    = $this->getHttp();
             $request = new \stdClass();
-            $http->shouldReceive('get')->andReturnUsing(function($url, $params) use ($request) {
+            $http->shouldReceive('get')->andReturnUsing(function ($url, $params) use ($request) {
                 $request->url = $url;
                 $request->params = $params;
+
                 return $request;
             });
 
@@ -51,16 +61,16 @@ namespace
         }
 
         /**
-         * Test upload();
+         * Test upload();.
          *
          * @expectedException EasyWeChat\Core\Exceptions\InvalidArgumentException
          */
         public function testUpload()
         {
             $http = $this->getHttp();
-            $http->shouldReceive('upload')->andReturnUsing(function($url, $params) {
+            $http->shouldReceive('upload')->andReturnUsing(function ($url, $params) {
                 return [
-                    'url' => $url,
+                    'url'    => $url,
                     'params' => $params,
                 ];
             });
@@ -72,12 +82,11 @@ namespace
             $this->assertEquals(Temporary::API_UPLOAD, $result['url']);
             $this->assertEquals(['media' => __DIR__.'/stubs/image.jpg'], $result['params']);
 
-
             $temporary->upload('image', '/this-is-are-non-exists-path/foo.jpg');// exception,invalid path
         }
 
         /**
-         * Test download()
+         * Test download().
          *
          * @expectedException EasyWeChat\Core\Exceptions\InvalidArgumentException
          */
@@ -88,12 +97,12 @@ namespace
         }
 
         /**
-         * Test __call();
+         * Test __call();.
          */
         public function testProxyMethods()
         {
             $temporary = Mockery::mock(Temporary::class.'[upload]', [$this->getHttp()]);
-            $temporary->shouldReceive('upload')->andReturnUsing(function($type, $path){
+            $temporary->shouldReceive('upload')->andReturnUsing(function ($type, $path) {
                 return [$type, $path];
             });
 
@@ -107,7 +116,8 @@ namespace
 
 namespace EasyWeChat\Support
 {
-    class File {
+    class File
+    {
         public static function getStreamExt()
         {
             return 'jpg';
@@ -120,7 +130,8 @@ namespace EasyWeChat\Material
     function file_put_contents($filename, $content)
     {
         $GLOBALS['temporary_download_filename'] = $filename;
-        $GLOBALS['temporary_download_content'] = $content;
+        $GLOBALS['temporary_download_content']  = $content;
+
         return true;
     }
 }

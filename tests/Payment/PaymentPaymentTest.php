@@ -1,8 +1,15 @@
 <?php
 
-use EasyWeChat\Core\Http;
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use EasyWeChat\Payment\API;
-use EasyWeChat\Payment\Order;
 use EasyWeChat\Payment\Merchant;
 use EasyWeChat\Payment\Payment;
 
@@ -27,7 +34,7 @@ class PaymentPaymentTest extends TestCase
     }
 
     /**
-     * Test scheme()
+     * Test scheme().
      */
     public function testScheme()
     {
@@ -45,7 +52,7 @@ class PaymentPaymentTest extends TestCase
     }
 
     /**
-     * Test setMerchant()、getMerchant()、setAPI() and getAPI()
+     * Test setMerchant()、getMerchant()、setAPI() and getAPI().
      */
     public function testSetterAndGetter()
     {
@@ -59,9 +66,9 @@ class PaymentPaymentTest extends TestCase
         $this->assertEquals($api, $payment->getAPI());
 
         $merchant = Mockery::mock(Merchant::class);
-        $api = Mockery::mock(API::class);
-        $tmp = null;
-        $api->shouldReceive('setMerchant')->andReturnUsing(function($m) use (&$tmp){
+        $api      = Mockery::mock(API::class);
+        $tmp      = null;
+        $api->shouldReceive('setMerchant')->andReturnUsing(function ($m) use (&$tmp) {
             $tmp = $m;
         });
         $payment->setAPI($api);

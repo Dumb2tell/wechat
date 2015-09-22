@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace {
     use EasyWeChat\Js\Js;
 
@@ -20,7 +29,7 @@ namespace {
          */
         public function testConfig()
         {
-            $http = $this->getMockHttp();
+            $http  = $this->getMockHttp();
             $cache = $this->getMockCache();
             $http->shouldReceive('setExpectedException')->andReturn($http);
             $cache->shouldReceive('get')->andReturn('foo');
@@ -49,7 +58,7 @@ namespace {
          */
         public function testGetConfigArray()
         {
-            $http = $this->getMockHttp();
+            $http  = $this->getMockHttp();
             $cache = $this->getMockCache();
             $http->shouldReceive('setExpectedException')->andReturn($http);
             $cache->shouldReceive('get')->andReturn('foo');
@@ -67,7 +76,7 @@ namespace {
          */
         public function testTicket()
         {
-            $http = $this->getMockHttp();
+            $http  = $this->getMockHttp();
             $cache = $this->getMockCache();
             $http->shouldReceive('setExpectedException')->andReturn($http);
             $cache->shouldReceive('get')->andReturn('foo');
@@ -77,7 +86,7 @@ namespace {
 
             $this->assertEquals('foo', $js->ticket());
 
-            $http = $this->getMockHttp();
+            $http  = $this->getMockHttp();
             $cache = $this->getMockCache();
             $cache->shouldReceive('get')->andReturnUsing(function ($key, $callback) {
                 return $callback($key);
@@ -98,7 +107,7 @@ namespace {
          */
         public function testSignature()
         {
-            $http = $this->getMockHttp();
+            $http  = $this->getMockHttp();
             $cache = $this->getMockCache();
             $http->shouldReceive('setExpectedException')->andReturn($http);
             $cache->shouldReceive('get')->andReturn('foo');
@@ -132,18 +141,18 @@ namespace {
          */
         public function testGetSignature()
         {
-            $http = $this->getMockHttp();
+            $http  = $this->getMockHttp();
             $cache = $this->getMockCache();
             $http->shouldReceive('setExpectedException')->andReturn($http);
 
             $js = new Js('foo', 'bar', $cache, $http);
             $js->setUrl('http://easywechat.org');
 
-            $ticket = 'ticket';
-            $nonce = 'foo';
+            $ticket    = 'ticket';
+            $nonce     = 'foo';
             $timestamp = 1234578902;
-            $url = 'http://easywechat.org';
-            $expect = sha1("jsapi_ticket={$ticket}&noncestr={$nonce}&timestamp={$timestamp}&url={$url}");
+            $url       = 'http://easywechat.org';
+            $expect    = sha1("jsapi_ticket={$ticket}&noncestr={$nonce}&timestamp={$timestamp}&url={$url}");
 
             $this->assertEquals($expect, $js->getSignature($ticket, $nonce, $timestamp, $url));
         }
@@ -153,7 +162,7 @@ namespace {
          */
         public function testSetUrl()
         {
-            $http = $this->getMockHttp();
+            $http  = $this->getMockHttp();
             $cache = $this->getMockCache();
             $http->shouldReceive('setExpectedException')->andReturn($http);
 
@@ -169,7 +178,7 @@ namespace {
 }
 
 namespace EasyWeChat\Support {
-    class Url 
+    class Url
     {
         public static function current()
         {

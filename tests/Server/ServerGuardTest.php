@@ -1,10 +1,18 @@
 <?php
 
-use Symfony\Component\HttpFoundation\Request;
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use EasyWeChat\Encryption\Encryptor;
 use EasyWeChat\Server\Guard;
-use EasyWeChat\Server\Transformer;
 use EasyWeChat\Support\XML;
+use Symfony\Component\HttpFoundation\Request;
 
 class ServerGuardTest extends TestCase
 {
@@ -13,22 +21,22 @@ class ServerGuardTest extends TestCase
         $request = Mockery::mock(Request::class);
 
         $request->shouldReceive('get')->andReturnUsing(function ($key) use ($queries) {
-            $queries = $queries ? : [
+            $queries = $queries ?: [
                 'signature' => '5fe39987c51aa87c0da1af7420d4649d77850391',
                 'timestamp' => '1437865042',
-                'nonce' => '335941714',
+                'nonce'     => '335941714',
             ];
 
             return isset($queries[$key]) ? $queries[$key] : null;
         });
 
-        $message = $message ? : [
-                'ToUserName' => 'gh_9a1a7e312b32',
+        $message = $message ?: [
+                'ToUserName'   => 'gh_9a1a7e312b32',
                 'FromUserName' => 'oNlnUjq_uJdd52zt3OxFsJHEr_NY',
-                'CreateTime' => '1437865042',
-                'MsgType' => 'text',
-                'Content' => 'foobar',
-                'MsgId' => '6175583331658476609',
+                'CreateTime'   => '1437865042',
+                'MsgType'      => 'text',
+                'Content'      => 'foobar',
+                'MsgId'        => '6175583331658476609',
             ];
 
         $request->shouldReceive('getContent')->andReturn(XML::build($message));
@@ -44,7 +52,7 @@ class ServerGuardTest extends TestCase
     public function testServe()
     {
         $server = $this->getServer(null, [
-                'echostr' => 'foobar'
+                'echostr' => 'foobar',
             ]);
 
         $this->assertEquals('foobar', $server->serve()->getContent());
@@ -80,7 +88,7 @@ class ServerGuardTest extends TestCase
         });
 
         $encryptor = Mockery::mock(Encryptor::class);
-        $raw = null;
+        $raw       = null;
         $encryptor->shouldReceive('encryptMsg')->andReturnUsing(function ($message) use (&$raw) {
             $raw = $message;
 
@@ -88,11 +96,11 @@ class ServerGuardTest extends TestCase
         });
         $encryptor->shouldReceive('decryptMsg')->andReturn([
                 'FromUserName' => 'oNlnUjq_uJdd52zt3OxFsJHEr_NY',
-                'ToUserName' => 't3OxFsJHEr_NY',
-                'CreateTime' => '1437865042',
-                'MsgType' => 'text',
-                'Content' => 'foobar',
-                'MsgId' => '6175583331658476609',
+                'ToUserName'   => 't3OxFsJHEr_NY',
+                'CreateTime'   => '1437865042',
+                'MsgType'      => 'text',
+                'Content'      => 'foobar',
+                'MsgId'        => '6175583331658476609',
             ]);
         $server->setEncryptor($encryptor);
 
@@ -107,11 +115,11 @@ class ServerGuardTest extends TestCase
     public function testResponseWithEvent()
     {
         $server = $this->getServer([
-                'ToUserName' => 'gh_9a1a7e312b32',
+                'ToUserName'   => 'gh_9a1a7e312b32',
                 'FromUserName' => 'oNlnUjq_uJdd52zt3OxFsJHEr_NY',
-                'CreateTime' => '1437865042',
-                'MsgType' => 'event',
-                'Event' => 'subscribe',
+                'CreateTime'   => '1437865042',
+                'MsgType'      => 'event',
+                'Event'        => 'subscribe',
             ]);
         $logEvent = null;
         $response = $server->serve();
@@ -137,7 +145,7 @@ class ServerGuardTest extends TestCase
      */
     public function testSetEventListener()
     {
-        $server = $this->getServer();
+        $server  = $this->getServer();
         $closure = function () { return 'foo'; };
         $server->setEventListener($closure);
 
@@ -157,7 +165,7 @@ class ServerGuardTest extends TestCase
      */
     public function testSetMessageListener()
     {
-        $server = $this->getServer();
+        $server  = $this->getServer();
         $closure = function () { return 'foo'; };
         $server->setMessageListener($closure);
 

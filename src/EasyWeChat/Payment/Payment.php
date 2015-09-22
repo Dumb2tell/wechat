@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Payment.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -50,21 +54,23 @@ class Payment
     public function __construct(Merchant $merchant)
     {
         $this->merchant = $merchant;
-        $this->api = new API($merchant, new Http(new GuzzleHttp()));
+        $this->api      = new API($merchant, new Http(new GuzzleHttp()));
     }
 
     /**
      * Build payment scheme for product.
      *
-     * @param $productId
+     * @param string $productId
+     *
+     * @return string
      */
     public function scheme($productId)
     {
         $params = [
-            'appid' => $this->merchant->app_id,
-            'mch_id' => $this->merchant->merchant_id,
+            'appid'      => $this->merchant->app_id,
+            'mch_id'     => $this->merchant->merchant_id,
             'time_stamp' => time(),
-            'nonce_str' => uniqid(),
+            'nonce_str'  => uniqid(),
             'product_id' => $productId,
         ];
 
@@ -126,7 +132,7 @@ class Payment
      */
     public function __call($method, $args)
     {
-        if (is_callable($this->api, $method)) {
+        if (is_callable([$this->api, $method])) {
             return call_user_func_array([$this->api, $method], $args);
         }
     }

@@ -1,33 +1,42 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use EasyWeChat\Message\Article;
+use EasyWeChat\Message\Articles;
+use EasyWeChat\Message\Image;
 use EasyWeChat\Message\Link;
 use EasyWeChat\Message\Text;
-use EasyWeChat\Message\Image;
 use EasyWeChat\Message\Video;
 use EasyWeChat\Message\Voice;
-use EasyWeChat\Message\Articles;
 use EasyWeChat\Staff\Transformer;
 
 class StaffTransformerTest extends TestCase
 {
     /**
-     * Test transform()
+     * Test transform().
      */
     public function testTransform()
     {
-        $message = Mockery::mock(Link::class);
+        $message     = Mockery::mock(Link::class);
         $transformer = new Transformer();
 
         $this->assertEquals([], $transformer->transform($message));
     }
 
     /**
-     * Test transformText()
+     * Test transformText().
      */
     public function testTransformText()
     {
-        $message = new Text();
+        $message          = new Text();
         $message->content = 'foo';
 
         $transformer = new Transformer();
@@ -36,11 +45,11 @@ class StaffTransformerTest extends TestCase
     }
 
     /**
-     * Test transformImage()
+     * Test transformImage().
      */
     public function testTransformImage()
     {
-        $message = new Image();
+        $message           = new Image();
         $message->media_id = 'foo';
 
         $transformer = new Transformer();
@@ -49,14 +58,14 @@ class StaffTransformerTest extends TestCase
     }
 
     /**
-     * Test transformVideo()
+     * Test transformVideo().
      */
     public function testTransformVideo()
     {
-        $message = new Video();
-        $message->media_id = 'foo';
-        $message->title = 'hello world';
-        $message->description = 'description string.';
+        $message                 = new Video();
+        $message->media_id       = 'foo';
+        $message->title          = 'hello world';
+        $message->description    = 'description string.';
         $message->thumb_media_id = 'thumb media id';
 
         $transformer = new Transformer();
@@ -69,11 +78,11 @@ class StaffTransformerTest extends TestCase
     }
 
     /**
-     * Test transformVoice()
+     * Test transformVoice().
      */
     public function testTransformVoice()
     {
-        $message = new Voice();
+        $message           = new Voice();
         $message->media_id = 'foo';
 
         $transformer = new Transformer();
@@ -82,12 +91,12 @@ class StaffTransformerTest extends TestCase
     }
 
     /**
-     * Test transformArticles()
+     * Test transformArticles().
      */
     public function testTransformArticles()
     {
         $message = new Articles();
-        $message->items(function(){
+        $message->items(function () {
             return [
                 new Article(['title' => 'foo']),
                 new Article(['title' => 'bar']),

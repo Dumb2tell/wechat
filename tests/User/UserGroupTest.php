@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use EasyWeChat\Core\Http;
 use EasyWeChat\User\Group;
 
@@ -50,7 +59,7 @@ class UserGroupTest extends TestCase
 
         $expected = [
             'group' => [
-                'id' => 12,
+                'id'   => 12,
                 'name' => 'newName',
             ],
         ];
@@ -112,7 +121,7 @@ class UserGroupTest extends TestCase
         $user = new Group($http);
 
         $expected = [
-            'openid' => 'overtrue',
+            'openid'     => 'overtrue',
             'to_groupid' => 13,
         ];
 
@@ -134,7 +143,7 @@ class UserGroupTest extends TestCase
 
         $expected = [
             'openid_list' => ['overtrue', 'foobar'],
-            'to_groupid' => 13,
+            'to_groupid'  => 13,
         ];
 
         $this->assertEquals($expected, $user->moveUsers(['overtrue', 'foobar'], 13));

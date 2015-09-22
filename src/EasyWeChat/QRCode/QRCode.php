@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * QRCode.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -32,15 +36,15 @@ class QRCode
      */
     protected $http;
 
-    const DAY = 86400;
-    const SCENE_MAX_VALUE = 100000;
-    const SCENE_QR_CARD = 'QR_CARD';
-    const SCENE_QR_TEMPORARY = 'QR_SCENE';
-    const SCENE_QR_FOREVER = 'QR_LIMIT_SCENE';
+    const DAY                  = 86400;
+    const SCENE_MAX_VALUE      = 100000;
+    const SCENE_QR_CARD        = 'QR_CARD';
+    const SCENE_QR_TEMPORARY   = 'QR_SCENE';
+    const SCENE_QR_FOREVER     = 'QR_LIMIT_SCENE';
     const SCENE_QR_FOREVER_STR = 'QR_LIMIT_STR_SCENE';
 
     const API_CREATE = 'https://api.weixin.qq.com/cgi-bin/qrcode/create';
-    const API_SHOW = 'https://mp.weixin.qq.com/cgi-bin/showqrcode';
+    const API_SHOW   = 'https://mp.weixin.qq.com/cgi-bin/showqrcode';
 
     /**
      * Constructor.
@@ -62,10 +66,10 @@ class QRCode
     public function forever($sceneValue)
     {
         if (is_int($sceneValue) && $sceneValue > 0 && $sceneValue < self::SCENE_MAX_VALUE) {
-            $type = self::SCENE_QR_FOREVER;
+            $type     = self::SCENE_QR_FOREVER;
             $sceneKey = 'scene_id';
         } else {
-            $type = self::SCENE_QR_FOREVER_STR;
+            $type     = self::SCENE_QR_FOREVER_STR;
             $sceneKey = 'scene_str';
         }
 

@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Notice.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -45,11 +49,11 @@ class Notice
      * @var array
      */
     protected $message = [
-                          'touser' => '',
+                          'touser'      => '',
                           'template_id' => '',
-                          'url' => '',
-                          'topcolor' => '#FF0000',
-                          'data' => [],
+                          'url'         => '',
+                          'topcolor'    => '#FF0000',
+                          'data'        => [],
                          ];
     /**
      * Message backup.
@@ -58,7 +62,7 @@ class Notice
      */
     protected $messageBackup;
 
-    const API_SEND_NOTICE = 'https://api.weixin.qq.com/cgi-bin/message/template/send';
+    const API_SEND_NOTICE  = 'https://api.weixin.qq.com/cgi-bin/message/template/send';
     const API_SET_INDUSTRY = 'https://api.weixin.qq.com/cgi-bin/template/api_set_industry';
     const API_ADD_TEMPLATE = 'https://api.weixin.qq.com/cgi-bin/template/api_add_template';
 
@@ -69,7 +73,7 @@ class Notice
      */
     public function __construct(Http $http)
     {
-        $this->http = $http->setExpectedException(NoticeHttpException::class);
+        $this->http          = $http->setExpectedException(NoticeHttpException::class);
         $this->messageBackup = $this->message;
     }
 
@@ -128,11 +132,11 @@ class Notice
         $color = null
     ) {
         $params = [
-                   'touser' => $to,
+                   'touser'      => $to,
                    'template_id' => $templateId,
-                   'url' => $url,
-                   'topcolor' => $color,
-                   'data' => $data,
+                   'url'         => $url,
+                   'topcolor'    => $color,
+                   'data'        => $data,
                   ];
 
         $required = [
@@ -141,7 +145,7 @@ class Notice
                     ];
 
         foreach ($params as $key => $value) {
-            if (in_array($key, $required) && empty($value) && empty($this->message[$key])) {
+            if (in_array($key, $required, true) && empty($value) && empty($this->message[$key])) {
                 throw new InvalidArgumentException("Attibute '$key' can not be empty!");
             }
 
@@ -150,7 +154,7 @@ class Notice
 
         $params['data'] = $this->formatData($params['data']);
 
-        $result = $this->http->json(self::API_SEND_NOTICE, $params);
+        $result        = $this->http->json(self::API_SEND_NOTICE, $params);
         $this->message = $this->messageBackup;
 
         return $result['msgid'];
@@ -167,16 +171,16 @@ class Notice
     public function __call($method, $args)
     {
         $map = [
-                'template' => 'template_id',
+                'template'   => 'template_id',
                 'templateId' => 'template_id',
-                'to' => 'touser',
-                'receiver' => 'touser',
-                'color' => 'topcolor',
-                'topColor' => 'topcolor',
-                'url' => 'url',
-                'link' => 'url',
-                'data' => 'data',
-                'with' => 'data',
+                'to'         => 'touser',
+                'receiver'   => 'touser',
+                'color'      => 'topcolor',
+                'topColor'   => 'topcolor',
+                'url'        => 'url',
+                'link'       => 'url',
+                'data'       => 'data',
+                'with'       => 'data',
                ];
 
         if (0 === stripos($method, 'with')) {
@@ -189,7 +193,6 @@ class Notice
 
         if (isset($map[$method])) {
             $this->message[$map[$method]] = array_shift($args);
-
         }
 
         return $this;

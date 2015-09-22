@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use EasyWeChat\Menu\Menu;
 use EasyWeChat\Support\Collection;
 
@@ -24,29 +33,29 @@ class MenuMenuTest extends TestCase
             [
                 'name' => '博客',
                 'type' => 'view',
-                'key' => 'http://overtrue.me',
+                'key'  => 'http://overtrue.me',
             ],
             [
-                'name' => '更多',
-                'type' => null,
-                'key' => null,
+                'name'       => '更多',
+                'type'       => null,
+                'key'        => null,
                 'sub_button' => [
                     [
                         'name' => 'GitHub',
                         'type' => 'view',
-                        'key' => 'https://github.com/overtrue',
+                        'key'  => 'https://github.com/overtrue',
                     ],
                     [
                         'name' => '微博',
                         'type' => 'view',
-                        'key' => 'http://weibo.com/44294631',
+                        'key'  => 'http://weibo.com/44294631',
                     ],
                 ],
             ],
         ];
         // test collection
         $menus[1]['sub_button'] = new Collection($menus[1]['sub_button']);
-        $response = $menu->set($menus);
+        $response               = $menu->set($menus);
 
         $this->assertEquals($excepted, $response['button']);
 

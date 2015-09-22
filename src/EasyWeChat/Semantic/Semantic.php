@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Semantic.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -50,7 +54,7 @@ class Semantic
     public function __construct($appId, Http $http)
     {
         $this->appId = $appId;
-        $this->http = $http->setExpectedException(SemanticHttpException::class);
+        $this->http  = $http->setExpectedException(SemanticHttpException::class);
     }
 
     /**
@@ -65,9 +69,9 @@ class Semantic
     public function query($keyword, $categories, array $other = [])
     {
         $params = [
-                   'query' => $keyword,
+                   'query'    => $keyword,
                    'category' => implode(',', (array) $categories),
-                   'appid' => $this->appId,
+                   'appid'    => $this->appId,
                   ];
 
         return new Collection($this->http->json(self::API_SEARCH, array_merge($params, $other)));

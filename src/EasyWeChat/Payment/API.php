@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * API.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -41,25 +45,25 @@ class API
 
     // api
     const API_PREPARE_ORDER = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
-    const API_QUERY = 'https://api.mch.weixin.qq.com/pay/orderquery';
-    const API_CLOSE = 'https://api.mch.weixin.qq.com/pay/closeorder';
-    const API_REVERSE = 'https://api.mch.weixin.qq.com/secapi/pay/reverse';
-    const API_REFUND = 'https://api.mch.weixin.qq.com/secapi/pay/refund';
-    const API_QUERY_REFUND = 'https://api.mch.weixin.qq.com/pay/refundquery';
+    const API_QUERY         = 'https://api.mch.weixin.qq.com/pay/orderquery';
+    const API_CLOSE         = 'https://api.mch.weixin.qq.com/pay/closeorder';
+    const API_REVERSE       = 'https://api.mch.weixin.qq.com/secapi/pay/reverse';
+    const API_REFUND        = 'https://api.mch.weixin.qq.com/secapi/pay/refund';
+    const API_QUERY_REFUND  = 'https://api.mch.weixin.qq.com/pay/refundquery';
     const API_DOWNLOAD_BILL = 'https://api.mch.weixin.qq.com/pay/downloadbill';
-    const API_REPORT = 'https://api.mch.weixin.qq.com/payitil/report';
-    const API_URL_SHORTEN = 'https://api.mch.weixin.qq.com/tools/shorturl';
+    const API_REPORT        = 'https://api.mch.weixin.qq.com/payitil/report';
+    const API_URL_SHORTEN   = 'https://api.mch.weixin.qq.com/tools/shorturl';
 
     // order id types.
     const TRANSCATION_ID = 'transcation_id';
-    const OUT_TRADE_NO = 'out_trade_no';
-    const OUT_REFUND_NO = 'out_refund_no';
-    const REFUND_ID = 'refund_id';
+    const OUT_TRADE_NO   = 'out_trade_no';
+    const OUT_REFUND_NO  = 'out_refund_no';
+    const REFUND_ID      = 'refund_id';
 
     // bill types.
-    const BILL_TYPE_ALL = 'ALL';
+    const BILL_TYPE_ALL     = 'ALL';
     const BILL_TYPE_SUCCESS = 'SUCCESS';
-    const BILL_TYPE_REFUND = 'REFUND';
+    const BILL_TYPE_REFUND  = 'REFUND';
     const BILL_TYPE_REVOKED = 'REVOKED';
 
     /**
@@ -71,7 +75,7 @@ class API
     public function __construct(Merchant $merchant, Http $http)
     {
         $this->merchant = $merchant;
-        $this->http = $http->setExpectedException(PaymentHttpException::class);
+        $this->http     = $http->setExpectedException(PaymentHttpException::class);
     }
 
     /**
@@ -159,12 +163,12 @@ class API
         $opUserId = null
         ) {
         $params = [
-            $type => $orderNo,
-            'total_fee' => $totalFee,
-            'refund_fee' => $refundFee ?: $totalFee,
-            'refund_no' => $refundNo ?: $orderNo,
+            $type             => $orderNo,
+            'total_fee'       => $totalFee,
+            'refund_fee'      => $refundFee ?: $totalFee,
+            'refund_no'       => $refundNo ?: $orderNo,
             'refund_fee_type' => $this->merchant->fee_type,
-            'op_user_id' => $opUserId ?: $this->merchant->merchant_id,
+            'op_user_id'      => $opUserId ?: $this->merchant->merchant_id,
         ];
 
         return $this->request(self::API_REFUND, $params);
@@ -289,12 +293,12 @@ class API
      */
     protected function request($api, array $params, $method = 'post')
     {
-        $params['appid'] = $this->merchant->app_id;
-        $params['mch_id'] = $this->merchant->merchant_id;
+        $params['appid']       = $this->merchant->app_id;
+        $params['mch_id']      = $this->merchant->merchant_id;
         $params['device_info'] = $this->merchant->device_info;
-        $params['time_stamp'] = time();
-        $params['nonce_str'] = uniqid();
-        $params['sign'] = (new SignGenerator($this->merchant->key, 'md5'))
+        $params['time_stamp']  = time();
+        $params['nonce_str']   = uniqid();
+        $params['sign']        = (new SignGenerator($this->merchant->key, 'md5'))
                                     ->generate($params);
 
         return $this->parseResponse($this->http->{$method}($api, XML::build($params)));

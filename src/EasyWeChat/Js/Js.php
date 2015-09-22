@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Js.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -82,10 +86,10 @@ class Js
      */
     public function __construct($appId, $secret, Cache $cache, Http $http)
     {
-        $this->appId = $appId;
+        $this->appId  = $appId;
         $this->secret = $secret;
-        $this->cache = $cache;
-        $this->http = $http->setExpectedException(JsHttpException::class);
+        $this->cache  = $cache;
+        $this->http   = $http->setExpectedException(JsHttpException::class);
     }
 
     /**
@@ -104,7 +108,7 @@ class Js
 
         $base = [
                  'debug' => $debug,
-                 'beta' => $beta,
+                 'beta'  => $beta,
                 ];
         $config = array_merge($base, $signPackage, ['jsApiList' => $APIs]);
 
@@ -157,16 +161,16 @@ class Js
      */
     public function signature($url = null, $nonce = null, $timestamp = null)
     {
-        $url = $url ? $url : $this->getUrl();
-        $nonce = $nonce ? $nonce : Str::quickRandom(10);
+        $url       = $url ? $url : $this->getUrl();
+        $nonce     = $nonce ? $nonce : Str::quickRandom(10);
         $timestamp = $timestamp ? $timestamp : time();
-        $ticket = $this->ticket();
+        $ticket    = $this->ticket();
 
         $sign = [
-                 'appId' => $this->appId,
-                 'nonceStr' => $nonce,
+                 'appId'     => $this->appId,
+                 'nonceStr'  => $nonce,
                  'timestamp' => $timestamp,
-                 'url' => $url,
+                 'url'       => $url,
                  'signature' => $this->getSignature($ticket, $nonce, $timestamp, $url),
                 ];
 

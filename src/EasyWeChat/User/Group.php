@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Group.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -24,12 +28,12 @@ use EasyWeChat\Core\Http;
  */
 class Group
 {
-    const API_GET = 'https://api.weixin.qq.com/cgi-bin/groups/get';
-    const API_CREATE = 'https://api.weixin.qq.com/cgi-bin/groups/create';
-    const API_UPDATE = 'https://api.weixin.qq.com/cgi-bin/groups/update';
-    const API_DELETE = 'https://api.weixin.qq.com/cgi-bin/groups/delete';
-    const API_USER_GROUP_ID = 'https://api.weixin.qq.com/cgi-bin/groups/getid';
-    const API_MEMBER_UPDATE = 'https://api.weixin.qq.com/cgi-bin/groups/members/update';
+    const API_GET                 = 'https://api.weixin.qq.com/cgi-bin/groups/get';
+    const API_CREATE              = 'https://api.weixin.qq.com/cgi-bin/groups/create';
+    const API_UPDATE              = 'https://api.weixin.qq.com/cgi-bin/groups/update';
+    const API_DELETE              = 'https://api.weixin.qq.com/cgi-bin/groups/delete';
+    const API_USER_GROUP_ID       = 'https://api.weixin.qq.com/cgi-bin/groups/getid';
+    const API_MEMBER_UPDATE       = 'https://api.weixin.qq.com/cgi-bin/groups/members/update';
     const API_MEMBER_BATCH_UPDATE = 'https://api.weixin.qq.com/cgi-bin/groups/members/batchupdate';
 
     /**
@@ -91,7 +95,7 @@ class Group
     {
         $params = [
                    'group' => [
-                               'id' => $groupId,
+                               'id'   => $groupId,
                                'name' => $name,
                               ],
                   ];
@@ -142,7 +146,7 @@ class Group
     public function moveUser($openId, $groupId)
     {
         $params = [
-                   'openid' => $openId,
+                   'openid'     => $openId,
                    'to_groupid' => $groupId,
                   ];
 
@@ -161,7 +165,7 @@ class Group
     {
         $params = [
                    'openid_list' => $openIds,
-                   'to_groupid' => $groupId,
+                   'to_groupid'  => $groupId,
                   ];
 
         return $this->http->json(self::API_MEMBER_BATCH_UPDATE, $params);

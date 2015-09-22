@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use EasyWeChat\Core\Http;
 use EasyWeChat\Material\Material;
 
@@ -28,9 +37,9 @@ class MaterialMaterialTest extends TestCase
         $http = $this->getHttp();
         $http->shouldReceive('upload')->andReturnUsing(function ($url, $files, $form) {
             return [
-                'url' => $url,
+                'url'   => $url,
                 'files' => $files,
-                'form' => $form,
+                'form'  => $form,
             ];
         });
         $material = new Material($http);
@@ -52,9 +61,9 @@ class MaterialMaterialTest extends TestCase
         $http = $this->getHttp();
         $http->shouldReceive('upload')->andReturnUsing(function ($url, $files, $form) {
             return [
-                'url' => $url,
+                'url'   => $url,
                 'files' => $files,
-                'form' => $form,
+                'form'  => $form,
             ];
         });
         $material = new Material($http);
@@ -73,9 +82,9 @@ class MaterialMaterialTest extends TestCase
         $http = $this->getHttp();
         $http->shouldReceive('upload')->andReturnUsing(function ($url, $files, $form) {
             return [
-                'url' => $url,
+                'url'   => $url,
                 'files' => $files,
-                'form' => $form,
+                'form'  => $form,
             ];
         });
         $material = new Material($http);
@@ -94,9 +103,9 @@ class MaterialMaterialTest extends TestCase
         $http = $this->getHttp();
         $http->shouldReceive('upload')->andReturnUsing(function ($url, $files, $form) {
             return [
-                'url' => $url,
+                'url'   => $url,
                 'files' => $files,
-                'form' => $form,
+                'form'  => $form,
             ];
         });
         $material = new Material($http);
@@ -117,9 +126,9 @@ class MaterialMaterialTest extends TestCase
         $http->shouldReceive('json')->andReturnUsing(function ($url, $form) {
             return [
                 'media_id' => [
-                    'url' => $url,
+                    'url'  => $url,
                     'form' => $form,
-                ]
+                ],
             ];
         });
         $material = new Material($http);
@@ -138,7 +147,7 @@ class MaterialMaterialTest extends TestCase
         $http = $this->getHttp();
         $http->shouldReceive('json')->andReturnUsing(function ($url, $form) {
             return [
-                'url' => $url,
+                'url'  => $url,
                 'form' => $form,
             ];
         });
@@ -168,9 +177,9 @@ class MaterialMaterialTest extends TestCase
         $http = $this->getHttp();
         $http->shouldReceive('upload')->andReturnUsing(function ($url, $files, $form) {
             return [
-                'url' => $url,
+                'url'   => $url,
                 'files' => $files,
-                'form' => $form,
+                'form'  => $form,
             ];
         });
         $material = new Material($http);
@@ -189,7 +198,7 @@ class MaterialMaterialTest extends TestCase
         $http = $this->getHttp();
         $http->shouldReceive('json')->andReturnUsing(function ($url, $form) {
             return [
-                    'url' => $url,
+                    'url'  => $url,
                     'form' => $form,
             ];
         });
@@ -209,7 +218,7 @@ class MaterialMaterialTest extends TestCase
         $http = $this->getHttp();
         $http->shouldReceive('json')->andReturnUsing(function ($url, $form) {
             return [
-                'url' => $url,
+                'url'  => $url,
                 'form' => $form,
             ];
         });
@@ -229,7 +238,7 @@ class MaterialMaterialTest extends TestCase
         $http = $this->getHttp();
         $http->shouldReceive('json')->andReturnUsing(function ($url, $form) {
             return [
-                'url' => $url,
+                'url'  => $url,
                 'form' => $form,
             ];
         });
@@ -239,9 +248,9 @@ class MaterialMaterialTest extends TestCase
         $response = $material->lists('image');
 
         $params = [
-            'type' => 'image',
+            'type'   => 'image',
             'offset' => 0,
-            'count' => 20,
+            'count'  => 20,
         ];
 
         $this->assertEquals(Material::API_LISTS, $response['url']);
@@ -251,9 +260,9 @@ class MaterialMaterialTest extends TestCase
         $response = $material->lists('image', 1, 21);
 
         $params = [
-            'type' => 'image',
+            'type'   => 'image',
             'offset' => 1,
-            'count' => 20, // 21 -> 20
+            'count'  => 20, // 21 -> 20
         ];
 
         $this->assertEquals(Material::API_LISTS, $response['url']);
@@ -266,9 +275,9 @@ class MaterialMaterialTest extends TestCase
     public function testStats()
     {
         $http = $this->getHttp();
-        $http->shouldReceive('get')->andReturnUsing(function($url){
+        $http->shouldReceive('get')->andReturnUsing(function ($url) {
            return [
-               'url' => $url,
+               'url'    => $url,
                'result' => ['image' => 10, 'video' => 6],
            ];
         });
@@ -279,6 +288,4 @@ class MaterialMaterialTest extends TestCase
         $this->assertEquals(Material::API_STATS, $response['url']);
         $this->assertEquals(['image' => 10, 'video' => 6], $response['result']);
     }
-
-
 }

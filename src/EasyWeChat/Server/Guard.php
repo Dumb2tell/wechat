@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Guard.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -175,7 +179,7 @@ class Guard
     }
 
     /**
-     * Set Encryptor
+     * Set Encryptor.
      *
      * @param Encryptor $encryptor
      *
@@ -263,8 +267,8 @@ class Guard
         $response = $this->handleMessage($message);
 
         return [
-            'to' => $message['FromUserName'],
-            'from' => $message['ToUserName'],
+            'to'       => $message['FromUserName'],
+            'from'     => $message['ToUserName'],
             'response' => $response,
         ];
     }
@@ -305,10 +309,10 @@ class Guard
     protected function buildReply($to, $from, $message)
     {
         $base = [
-            'ToUserName' => $to,
+            'ToUserName'   => $to,
             'FromUserName' => $from,
-            'CreateTime' => time(),
-            'MsgType' => $message->getType(),
+            'CreateTime'   => time(),
+            'MsgType'      => $message->getType(),
         ];
 
         $transformer = new Transformer();

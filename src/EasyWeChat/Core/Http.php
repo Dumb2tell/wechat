@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Http.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -57,7 +61,7 @@ class Http
      */
     public function __construct(HttpClient $client, AccessToken $token = null)
     {
-        $this->token = $token;
+        $this->token  = $token;
         $this->client = $client;
     }
 
@@ -140,13 +144,13 @@ class Http
     public function upload($url, array $files = [], array $form = [])
     {
         $options = [
-            'multipart' => [],
+            'multipart'   => [],
             'form_params' => $form,
         ];
 
         foreach ($files as $name => $path) {
             $options['multipart'][] = [
-                    'name' => $name,
+                    'name'     => $name,
                     'contents' => fopen($path, 'r'),
                 ];
         }
@@ -230,7 +234,7 @@ class Http
             return $response;
         }
 
-        if (isset($contents['errcode']) && 0 != $contents['errcode']) {
+        if (isset($contents['errcode']) && 0 !== $contents['errcode']) {
             if (empty($contents['errmsg'])) {
                 $contents['errmsg'] = 'Unknown';
             }
@@ -238,7 +242,7 @@ class Http
             $this->thorwException($contents['errmsg'], $contents['errcode']);
         }
 
-        if (isset($contents['errcode']) && $contents['errcode'] == self::HTTP_RESPONSE_ERROR_NONE) {
+        if (isset($contents['errcode']) && $contents['errcode'] === self::HTTP_RESPONSE_ERROR_NONE) {
             return true;
         }
 

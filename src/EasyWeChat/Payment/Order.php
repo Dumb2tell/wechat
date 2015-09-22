@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Order.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -24,9 +28,9 @@ use EasyWeChat\Support\Attribute;
  */
 class Order extends Attribute
 {
-    const JSAPI = 'JSAPI';
-    const NATIVE = 'NATIVE';
-    const APP = 'APP';
+    const JSAPI    = 'JSAPI';
+    const NATIVE   = 'NATIVE';
+    const APP      = 'APP';
     const MICROPAY = 'MICROPAY';
 
     protected $attributes = [

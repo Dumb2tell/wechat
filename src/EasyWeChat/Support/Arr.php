@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Arr.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -57,7 +61,7 @@ class Arr
 
         foreach ($array as $key => $value) {
             list($innerKey, $innerValue) = call_user_func($callback, $key, $value);
-            $results[$innerKey] = $innerValue;
+            $results[$innerKey]          = $innerValue;
         }
 
         return $results;
@@ -129,7 +133,7 @@ class Arr
         foreach (explode('.', $key) as $segment) {
             $results = [];
             foreach ($array as $value) {
-                $value = (array) $value;
+                $value     = (array) $value;
                 $results[] = $value[$segment];
             }
             $array = array_values($results);
@@ -279,7 +283,7 @@ class Arr
             if (is_null($key)) {
                 $results[] = $itemValue;
             } else {
-                $itemKey = is_object($item) ? $item->{$key} : $item[$key];
+                $itemKey           = is_object($item) ? $item->{$key} : $item[$key];
                 $results[$itemKey] = $itemValue;
             }
         }

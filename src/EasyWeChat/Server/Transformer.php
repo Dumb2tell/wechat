@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Transformer.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -73,8 +77,8 @@ class Transformer
     {
         $response = [
                      'Video' => [
-                                 'MediaId' => $message->media_id,
-                                 'Title' => $message->title,
+                                 'MediaId'     => $message->media_id,
+                                 'Title'       => $message->title,
                                  'Description' => $message->description,
                                 ],
                     ];
@@ -126,16 +130,16 @@ class Transformer
 
         foreach ($message->all() as $item) {
             $articles[] = [
-                           'Title' => $item->title,
+                           'Title'       => $item->title,
                            'Description' => $item->description,
-                           'Url' => $item->url,
-                           'PicUrl' => $item->pic_url,
+                           'Url'         => $item->url,
+                           'PicUrl'      => $item->pic_url,
                           ];
         }
 
         return [
                 'ArticleCount' => count($articles),
-                'Articles' => $articles,
+                'Articles'     => $articles,
                ];
     }
 }

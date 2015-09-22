@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
 
 use EasyWeChat\Core\Http;
 use EasyWeChat\Message\Text;
@@ -12,12 +20,12 @@ class StaffMessengerTest extends TestCase
     {
         $http = Mockery::mock(Http::class);
         $http->shouldReceive('setExpectedException')->andReturn($http);
-        $http->shouldReceive('json')->andReturnUsing(function($api, $message){
+        $http->shouldReceive('json')->andReturnUsing(function ($api, $message) {
             return compact('api', 'message');
         });
 
         $transformer = Mockery::mock(Transformer::class);
-        $transformer->shouldReceive('transform')->andReturnUsing(function($message){
+        $transformer->shouldReceive('transform')->andReturnUsing(function ($message) {
             return $message;
         });
 
@@ -27,7 +35,7 @@ class StaffMessengerTest extends TestCase
     }
 
     /**
-     * Test message()
+     * Test message().
      *
      * @expectedException EasyWeChat\Core\Exceptions\InvalidArgumentException
      */
@@ -45,7 +53,7 @@ class StaffMessengerTest extends TestCase
     }
 
     /**
-     * Test by()
+     * Test by().
      */
     public function testBy()
     {
@@ -59,7 +67,7 @@ class StaffMessengerTest extends TestCase
     }
 
     /**
-     * Test to()
+     * Test to().
      */
     public function testTo()
     {
@@ -72,7 +80,7 @@ class StaffMessengerTest extends TestCase
     }
 
     /**
-     * Test send()
+     * Test send().
      *
      * @expectedException EasyWeChat\Core\Exceptions\RuntimeException
      */

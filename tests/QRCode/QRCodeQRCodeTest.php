@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use EasyWeChat\Core\Http;
 use EasyWeChat\QRCode\QRCode;
 use EasyWeChat\Support\Collection;
@@ -7,13 +16,13 @@ use EasyWeChat\Support\Collection;
 class QRCodeQRCodeTest extends TestCase
 {
     /**
-     * Test forever();
+     * Test forever();.
      */
     public function testForever()
     {
         $http = Mockery::mock(Http::class);
         $http->shouldReceive('setExpectedException')->andReturn($http);
-        $http->shouldReceive('json')->andReturnUsing(function($api, $params){
+        $http->shouldReceive('json')->andReturnUsing(function ($api, $params) {
             return compact('api', 'params');
         });
 
@@ -39,13 +48,13 @@ class QRCodeQRCodeTest extends TestCase
     }
 
     /**
-     * Test temporary();
+     * Test temporary();.
      */
     public function testTemporary()
     {
         $http = Mockery::mock(Http::class);
         $http->shouldReceive('setExpectedException')->andReturn($http);
-        $http->shouldReceive('json')->andReturnUsing(function($api, $params){
+        $http->shouldReceive('json')->andReturnUsing(function ($api, $params) {
             return compact('api', 'params');
         });
 
@@ -71,13 +80,13 @@ class QRCodeQRCodeTest extends TestCase
     }
 
     /**
-     * Test card()
+     * Test card().
      */
     public function testCard()
     {
         $http = Mockery::mock(Http::class);
         $http->shouldReceive('setExpectedException')->andReturn($http);
-        $http->shouldReceive('json')->andReturnUsing(function($api, $params){
+        $http->shouldReceive('json')->andReturnUsing(function ($api, $params) {
             return compact('api', 'params');
         });
 
@@ -90,13 +99,13 @@ class QRCodeQRCodeTest extends TestCase
     }
 
     /**
-     * Test show()
+     * Test show().
      */
     public function testShow()
     {
         $http = Mockery::mock(Http::class);
         $http->shouldReceive('setExpectedException')->andReturn($http);
-        $http->shouldReceive('json')->andReturnUsing(function($api, $params){
+        $http->shouldReceive('json')->andReturnUsing(function ($api, $params) {
             return compact('api', 'params');
         });
 

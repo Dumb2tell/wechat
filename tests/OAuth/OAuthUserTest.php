@@ -1,10 +1,19 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
+use EasyWeChat\Core\Exceptions\InvalidArgumentException;
+use EasyWeChat\Core\Exceptions\RuntimeException;
 use EasyWeChat\Core\Http;
 use EasyWeChat\OAuth\Client;
 use EasyWeChat\OAuth\User;
-use EasyWeChat\Core\Exceptions\InvalidArgumentException;
-use EasyWeChat\Core\Exceptions\RuntimeException;
 use EasyWeChat\Support\Collection;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +35,7 @@ class OAuthClientTest extends TestCase
     }
 
     /**
-     * Test redirect()
+     * Test redirect().
      */
     public function testRedirect()
     {
@@ -41,9 +50,9 @@ class OAuthClientTest extends TestCase
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $uri = parse_url($response->getTargetUrl());
-         parse_str($uri['query'], $queries);
+        parse_str($uri['query'], $queries);
 
-        $this->assertEquals(Client::AUTHORIZE_URL, $uri['scheme']."://".$uri['host'].$uri['path']);
+        $this->assertEquals(Client::AUTHORIZE_URL, $uri['scheme'].'://'.$uri['host'].$uri['path']);
         $this->assertEquals('wechat_redirect', $uri['fragment']);
         $this->assertEquals('foo', $queries['appid']);
         $this->assertEquals('http://easywechat.org', $queries['redirect_uri']);
@@ -54,7 +63,6 @@ class OAuthClientTest extends TestCase
         try {
             $response = $client->redirect('http://easywechat.org', 'error_scope');
         } catch (Exception $e) {
-
         }
 
         $this->assertInstanceOf(InvalidArgumentException::class, $e);
@@ -62,7 +70,7 @@ class OAuthClientTest extends TestCase
     }
 
     /**
-     * Test silentRedirect()
+     * Test silentRedirect().
      */
     public function testSilentRedirect()
     {
@@ -77,9 +85,9 @@ class OAuthClientTest extends TestCase
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $uri = parse_url($response->getTargetUrl());
-         parse_str($uri['query'], $queries);
+        parse_str($uri['query'], $queries);
 
-        $this->assertEquals(Client::AUTHORIZE_URL, $uri['scheme']."://".$uri['host'].$uri['path']);
+        $this->assertEquals(Client::AUTHORIZE_URL, $uri['scheme'].'://'.$uri['host'].$uri['path']);
         $this->assertEquals('wechat_redirect', $uri['fragment']);
         $this->assertEquals('foo', $queries['appid']);
         $this->assertEquals('http://easywechat.org', $queries['redirect_uri']);
@@ -89,7 +97,7 @@ class OAuthClientTest extends TestCase
     }
 
     /**
-     * Test user()
+     * Test user().
      */
     public function testUser()
     {
@@ -111,15 +119,14 @@ class OAuthClientTest extends TestCase
             $this->assertEquals('Invalid state.', $e->getMessage());
         }
 
-
         $client->shouldReceive('getAccessToken')->andReturn([
-                'access_token' => 'test_access_token',
+                'access_token'  => 'test_access_token',
                 'refresh_token' => 'test_refresh_token',
-                'openid' => 'foo',
+                'openid'        => 'foo',
             ]);
         // mock getUserByAccessToken();
         $client->shouldReceive('getUserByAccessToken')->andReturn([
-            'openid' => 'foo',
+            'openid'   => 'foo',
             'nickname' => 'overtrue',
         ]);
 
@@ -131,12 +138,12 @@ class OAuthClientTest extends TestCase
     }
 
     /**
-     * Test getAccessToken()
+     * Test getAccessToken().
      */
     public function testGetAccessToken()
     {
         $http = $this->getHttp();
-        $http->shouldReceive('get')->andReturnUsing(function($api, $params){
+        $http->shouldReceive('get')->andReturnUsing(function ($api, $params) {
             return compact('api', 'params');
         });
         $client = new Client('foo', 'bar', Mockery::mock(Request::class), $http);
@@ -151,12 +158,12 @@ class OAuthClientTest extends TestCase
     }
 
     /**
-     * Test refresh()
+     * Test refresh().
      */
     public function testRefresh()
     {
         $http = $this->getHttp();
-        $http->shouldReceive('get')->andReturnUsing(function($api, $params){
+        $http->shouldReceive('get')->andReturnUsing(function ($api, $params) {
             return compact('api', 'params');
         });
         $client = new Client('foo', 'bar', Mockery::mock(Request::class), $http);
@@ -171,12 +178,12 @@ class OAuthClientTest extends TestCase
     }
 
     /**
-     * Test getUserByAccessToken()
+     * Test getUserByAccessToken().
      */
     public function testGetUserByAccessToken()
     {
         $http = $this->getHttp();
-        $http->shouldReceive('get')->andReturnUsing(function($api, $params){
+        $http->shouldReceive('get')->andReturnUsing(function ($api, $params) {
             return compact('api', 'params');
         });
         $client = new Client('foo', 'bar', Mockery::mock(Request::class), $http);

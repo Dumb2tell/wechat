@@ -1,8 +1,17 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
+use EasyWeChat\Core\Exceptions\InvalidArgumentException;
 use EasyWeChat\Core\Http;
 use EasyWeChat\Notice\Notice;
-use EasyWeChat\Core\Exceptions\InvalidArgumentException;
 
 class NoticeNoticeTest extends TestCase
 {
@@ -17,12 +26,12 @@ class NoticeNoticeTest extends TestCase
     }
 
     /**
-     * Test setIndustry()
+     * Test setIndustry().
      */
     public function testSetIndustry()
     {
-        $notice = $this->getNotice(function($http){
-            $http->shouldReceive('json')->andReturnUsing(function($api, $params){
+        $notice = $this->getNotice(function ($http) {
+            $http->shouldReceive('json')->andReturnUsing(function ($api, $params) {
                 return compact('api', 'params');
             });
         });
@@ -35,12 +44,12 @@ class NoticeNoticeTest extends TestCase
     }
 
     /**
-     * Test addTemplate()
+     * Test addTemplate().
      */
     public function testAddTemplate()
     {
-        $notice = $this->getNotice(function($http){
-            $http->shouldReceive('json')->andReturnUsing(function($api, $params){
+        $notice = $this->getNotice(function ($http) {
+            $http->shouldReceive('json')->andReturnUsing(function ($api, $params) {
                 return ['template_id' => compact('api', 'params')];
             });
         });
@@ -52,12 +61,12 @@ class NoticeNoticeTest extends TestCase
     }
 
     /**
-     * Test send()
+     * Test send().
      */
     public function testSend()
     {
-        $notice = $this->getNotice(function($http){
-            $http->shouldReceive('json')->andReturnUsing(function($api, $params){
+        $notice = $this->getNotice(function ($http) {
+            $http->shouldReceive('json')->andReturnUsing(function ($api, $params) {
                 return ['msgid' => compact('api', 'params')];
             });
         });
@@ -93,23 +102,23 @@ class NoticeNoticeTest extends TestCase
     }
 
     /**
-     * Test formatData()
+     * Test formatData().
      */
     public function testFormatData()
     {
-        $notice = $this->getNotice(function($http){
-            $http->shouldReceive('json')->andReturnUsing(function($api, $params){
+        $notice = $this->getNotice(function ($http) {
+            $http->shouldReceive('json')->andReturnUsing(function ($api, $params) {
                 return ['msgid' => compact('api', 'params')];
             });
         });
 
-        $data = array(
-            "first"    => "恭喜你购买成功！",
-            "keynote1" => "巧克力",
-            "keynote2" => "39.8元",
-            "keynote3" => "2014年9月16日",
-            "remark"   => "欢迎再次购买！",
-        );
+        $data = [
+            'first'    => '恭喜你购买成功！',
+            'keynote1' => '巧克力',
+            'keynote2' => '39.8元',
+            'keynote3' => '2014年9月16日',
+            'remark'   => '欢迎再次购买！',
+        ];
         $response = $notice->to('anzhengchao')->color('color1')->template('overtrue')->data($data)->send();
 
         $this->assertEquals('anzhengchao', $response['params']['touser']);
@@ -124,14 +133,14 @@ class NoticeNoticeTest extends TestCase
         $this->assertEquals(['value' => '欢迎再次购买！', 'color' => '#173177'], $response['params']['data']['remark']);
 
         // format2
-        $data = array(
-            "first"    => array("恭喜你购买成功！", '#555555'),
-            "keynote1" => array("巧克力", "#336699"),
-            "keynote2" => array("39.8元"),
-            "keynote3" => array("2014年9月16日", "#888888"),
-            "remark"   => '欢迎再次购买！',
-            "abc"      => new stdClass(),
-        );
+        $data = [
+            'first'    => ['恭喜你购买成功！', '#555555'],
+            'keynote1' => ['巧克力', '#336699'],
+            'keynote2' => ['39.8元'],
+            'keynote3' => ['2014年9月16日', '#888888'],
+            'remark'   => '欢迎再次购买！',
+            'abc'      => new stdClass(),
+        ];
 
         $response = $notice->to('anzhengchao')->color('color1')->template('overtrue')->data($data)->send();
 
@@ -142,15 +151,14 @@ class NoticeNoticeTest extends TestCase
         $this->assertEquals(['value' => '欢迎再次购买！', 'color' => '#173177'], $response['params']['data']['remark']);
         $this->assertEquals(['value' => 'error data item.', 'color' => '#173177'], $response['params']['data']['abc']);
 
-
         // format3
-        $data = array(
-            "first"    => array("value" => "恭喜你购买成功！", "color" => '#555555'),
-            "keynote1" => array("value" => "巧克力", "color" => "#336699"),
-            "keynote2" => array("value" => "39.8元", "color" => "#FF0000"),
-            "keynote3" => array("value" => "2014年9月16日", "color" => "#888888"),
-            "remark"   => array("value" => "欢迎再次购买！", "color" => "#5599FF"),
-        );
+        $data = [
+            'first'    => ['value' => '恭喜你购买成功！', 'color' => '#555555'],
+            'keynote1' => ['value' => '巧克力', 'color' => '#336699'],
+            'keynote2' => ['value' => '39.8元', 'color' => '#FF0000'],
+            'keynote3' => ['value' => '2014年9月16日', 'color' => '#888888'],
+            'remark'   => ['value' => '欢迎再次购买！', 'color' => '#5599FF'],
+        ];
         $response = $notice->to('anzhengchao')->color('color1')->template('overtrue')->data($data)->send();
 
         $this->assertEquals(['value' => '恭喜你购买成功！', 'color' => '#555555'], $response['params']['data']['first']);

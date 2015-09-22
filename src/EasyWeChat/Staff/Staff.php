@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Staff.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -24,12 +28,12 @@ use EasyWeChat\Core\Http;
  */
 class Staff
 {
-    const API_LISTS = 'https://api.weixin.qq.com/cgi-bin/customservice/getkflist';
-    const API_ONLINE = 'https://api.weixin.qq.com/cgi-bin/customservice/getonlinekflist';
-    const API_DELETE = 'https://api.weixin.qq.com/customservice/kfaccount/del';
-    const API_UPDATE = 'https://api.weixin.qq.com/customservice/kfaccount/update';
-    const API_CREATE = 'https://api.weixin.qq.com/customservice/kfaccount/add';
-    const API_MESSAGE_SEND = 'https://api.weixin.qq.com/cgi-bin/message/custom/send';
+    const API_LISTS         = 'https://api.weixin.qq.com/cgi-bin/customservice/getkflist';
+    const API_ONLINE        = 'https://api.weixin.qq.com/cgi-bin/customservice/getonlinekflist';
+    const API_DELETE        = 'https://api.weixin.qq.com/customservice/kfaccount/del';
+    const API_UPDATE        = 'https://api.weixin.qq.com/customservice/kfaccount/update';
+    const API_CREATE        = 'https://api.weixin.qq.com/customservice/kfaccount/add';
+    const API_MESSAGE_SEND  = 'https://api.weixin.qq.com/cgi-bin/message/custom/send';
     const API_AVATAR_UPLOAD = 'http://api.weixin.qq.com/customservice/kfaccount/uploadheadimg';
 
     /**
@@ -86,8 +90,8 @@ class Staff
     {
         $params = [
                    'kf_account' => $email,
-                   'nickname' => $nickname,
-                   'password' => $password,
+                   'nickname'   => $nickname,
+                   'password'   => $password,
                   ];
 
         return $this->http->json(self::API_CREATE, $params);
@@ -106,8 +110,8 @@ class Staff
     {
         $params = [
                    'kf_account' => $email,
-                   'nickname' => $nickname,
-                   'password' => $password,
+                   'nickname'   => $nickname,
+                   'password'   => $password,
                   ];
 
         return $this->http->json(self::API_UPDATE, $params);

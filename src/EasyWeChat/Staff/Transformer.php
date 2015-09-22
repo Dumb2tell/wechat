@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Transformer.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -45,11 +49,11 @@ class Transformer
      */
     public function transformText(AbstractMessage $message)
     {
-        return array(
-                'text' => array(
+        return [
+                'text' => [
                            'content' => $message->content,
-                          ),
-               );
+                          ],
+               ];
     }
 
     /**
@@ -59,11 +63,11 @@ class Transformer
      */
     public function transformImage(AbstractMessage $message)
     {
-        return array(
-                'image' => array(
+        return [
+                'image' => [
                             'media_id' => $message->media_id,
-                           ),
-               );
+                           ],
+               ];
     }
 
     /**
@@ -73,14 +77,14 @@ class Transformer
      */
     public function transformVideo(AbstractMessage $message)
     {
-        return array(
-                'video' => array(
-                            'title' => $message->title,
-                            'media_id' => $message->media_id,
-                            'description' => $message->description,
+        return [
+                'video' => [
+                            'title'          => $message->title,
+                            'media_id'       => $message->media_id,
+                            'description'    => $message->description,
                             'thumb_media_id' => $message->thumb_media_id,
-                           ),
-               );
+                           ],
+               ];
     }
 
     /**
@@ -90,11 +94,11 @@ class Transformer
      */
     public function transformVoice(AbstractMessage $message)
     {
-        return array(
-                'voice' => array(
+        return [
+                'voice' => [
                             'media_id' => $message->media_id,
-                           ),
-               );
+                           ],
+               ];
     }
 
     /**
@@ -104,17 +108,17 @@ class Transformer
      */
     public function transformArticles(AbstractMessage $message)
     {
-        $articles = array();
+        $articles = [];
 
         foreach ($message->items as $item) {
-            $articles[] = array(
-                           'title' => $item->title,
+            $articles[] = [
+                           'title'       => $item->title,
                            'description' => $item->description,
-                           'url' => $item->url,
-                           'picurl' => $item->pic_url,
-                          );
+                           'url'         => $item->url,
+                           'picurl'      => $item->pic_url,
+                          ];
         }
 
-        return array('news' => array('articles' => $articles));
+        return ['news' => ['articles' => $articles]];
     }
 }

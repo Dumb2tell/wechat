@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Encryptor.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -70,9 +74,9 @@ class Encryptor
             throw new RuntimeException("The ext 'mcrypt' is required.");
         }
 
-        $this->appId = $appId;
-        $this->token = $token;
-        $this->AESKey = $AESKey;
+        $this->appId     = $appId;
+        $this->token     = $token;
+        $this->AESKey    = $AESKey;
         $this->blockSize = 32;// mcrypt_get_block_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
     }
 
@@ -89,17 +93,17 @@ class Encryptor
     {
         $encrypt = $this->encrypt($xml, $this->appId);
 
-        !is_null($nonce) || $nonce = substr($this->appId, 0, 10);
+        !is_null($nonce) || $nonce         = substr($this->appId, 0, 10);
         !is_null($timestamp) || $timestamp = time();
 
         //生成安全签名
         $signature = $this->getSHA1($this->token, $timestamp, $nonce, $encrypt);
 
         $response = [
-            'Encrypt' => $encrypt,
+            'Encrypt'      => $encrypt,
             'MsgSignature' => $signature,
-            'TimeStamp' => $timestamp,
-            'Nonce' => $nonce,
+            'TimeStamp'    => $timestamp,
+            'Nonce'        => $nonce,
         ];
 
         //生成响应xml
@@ -227,13 +231,13 @@ class Encryptor
     private function encrypt($text, $appId)
     {
         try {
-            $key = $this->getAESKey();
+            $key    = $this->getAESKey();
             $random = $this->getRandomStr();
-            $text = $random.pack('N', strlen($text)).$text.$appId;
+            $text   = $random.pack('N', strlen($text)).$text.$appId;
 
             // $size   = mcrypt_get_block_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
             $module = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '', MCRYPT_MODE_CBC, '');
-            $iv = substr($key, 0, 16);
+            $iv     = substr($key, 0, 16);
 
             $text = $this->encode($text);
 
@@ -262,10 +266,10 @@ class Encryptor
     private function decrypt($encrypted, $appId)
     {
         try {
-            $key = $this->getAESKey();
+            $key        = $this->getAESKey();
             $ciphertext = base64_decode($encrypted, true);
-            $module = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '', MCRYPT_MODE_CBC, '');
-            $iv = substr($key, 0, 16);
+            $module     = mcrypt_module_open(MCRYPT_RIJNDAEL_128, '', MCRYPT_MODE_CBC, '');
+            $iv         = substr($key, 0, 16);
 
             mcrypt_generic_init($module, $key, $iv);
 
@@ -283,10 +287,10 @@ class Encryptor
                 return '';
             }
 
-            $content = substr($result, 16, strlen($result));
-            $listLen = unpack('N', substr($content, 0, 4));
-            $xmlLen = $listLen[1];
-            $xml = substr($content, 4, $xmlLen);
+            $content   = substr($result, 16, strlen($result));
+            $listLen   = unpack('N', substr($content, 0, 4));
+            $xmlLen    = $listLen[1];
+            $xml       = substr($content, 4, $xmlLen);
             $fromAppId = trim(substr($content, $xmlLen + 4));
         } catch (BaseException $e) {
             throw new EncryptionException($e->getMessage(), EncryptionException::ERROR_INVALID_XML);

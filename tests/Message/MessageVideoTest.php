@@ -1,11 +1,20 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use EasyWeChat\Message\Video;
 
 class MessageVideoTest extends TestCase
 {
     /**
-     * Test media()
+     * Test media().
      */
     public function testMedia()
     {
@@ -18,7 +27,7 @@ class MessageVideoTest extends TestCase
     }
 
     /**
-     * Test thumb()
+     * Test thumb().
      */
     public function testThumb()
     {

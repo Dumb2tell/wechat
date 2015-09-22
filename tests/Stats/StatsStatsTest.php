@@ -1,8 +1,16 @@
 <?php
 
-use EasyWeChat\Stats\Stats;
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
 
 use EasyWeChat\Core\Http;
+use EasyWeChat\Stats\Stats;
 
 class StatsStatsTest extends TestCase
 {
@@ -15,16 +23,15 @@ class StatsStatsTest extends TestCase
     {
         $http = Mockery::mock(Http::class);
         $http->shouldReceive('setExpectedException')->andReturn($http);
-        $http->shouldReceive('json')->andReturnUsing(function($api, $params){
+        $http->shouldReceive('json')->andReturnUsing(function ($api, $params) {
             return ['list' => compact('api', 'params')];
         });
 
         return $http;
     }
 
-
     /**
-     * Test userSummary()
+     * Test userSummary().
      */
     public function testuserSummary()
     {
@@ -36,7 +43,7 @@ class StatsStatsTest extends TestCase
     }
 
     /**
-     * Test userCumulate()
+     * Test userCumulate().
      */
     public function testuserCumulate()
     {
@@ -48,7 +55,7 @@ class StatsStatsTest extends TestCase
     }
 
     /**
-     * Test articleSummary()
+     * Test articleSummary().
      */
     public function testarticleSummary()
     {
@@ -60,7 +67,7 @@ class StatsStatsTest extends TestCase
     }
 
     /**
-     * Test articleTotal()
+     * Test articleTotal().
      */
     public function testarticleTotal()
     {
@@ -72,7 +79,7 @@ class StatsStatsTest extends TestCase
     }
 
     /**
-     * Test userReadSummary()
+     * Test userReadSummary().
      */
     public function testuserReadSummary()
     {
@@ -84,7 +91,7 @@ class StatsStatsTest extends TestCase
     }
 
     /**
-     * Test userReadHourly()
+     * Test userReadHourly().
      */
     public function testuserReadHourly()
     {
@@ -96,7 +103,7 @@ class StatsStatsTest extends TestCase
     }
 
     /**
-     * Test userShareSummary()
+     * Test userShareSummary().
      */
     public function testuserShareSummary()
     {
@@ -108,7 +115,7 @@ class StatsStatsTest extends TestCase
     }
 
     /**
-     * Test userShareHourly()
+     * Test userShareHourly().
      */
     public function testuserShareHourly()
     {
@@ -120,7 +127,7 @@ class StatsStatsTest extends TestCase
     }
 
     /**
-     * Test upstreamMessageSummary()
+     * Test upstreamMessageSummary().
      */
     public function testupstreamMessageSummary()
     {
@@ -132,7 +139,7 @@ class StatsStatsTest extends TestCase
     }
 
     /**
-     * Test upstreamMessageHourly()
+     * Test upstreamMessageHourly().
      */
     public function testupstreamMessageHourly()
     {
@@ -144,7 +151,7 @@ class StatsStatsTest extends TestCase
     }
 
     /**
-     * Test upstreamMessageWeekly()
+     * Test upstreamMessageWeekly().
      */
     public function testupstreamMessageWeekly()
     {
@@ -156,7 +163,7 @@ class StatsStatsTest extends TestCase
     }
 
     /**
-     * Test upstreamMessageMonthly()
+     * Test upstreamMessageMonthly().
      */
     public function testupstreamMessageMonthly()
     {
@@ -168,7 +175,7 @@ class StatsStatsTest extends TestCase
     }
 
     /**
-     * Test upstreamMessageDistSummary()
+     * Test upstreamMessageDistSummary().
      */
     public function testupstreamMessageDistSummary()
     {
@@ -180,7 +187,7 @@ class StatsStatsTest extends TestCase
     }
 
     /**
-     * Test upstreamMessageDistWeekly()
+     * Test upstreamMessageDistWeekly().
      */
     public function testupstreamMessageDistWeekly()
     {
@@ -192,7 +199,7 @@ class StatsStatsTest extends TestCase
     }
 
     /**
-     * Test upstreamMessageDistMonthly()
+     * Test upstreamMessageDistMonthly().
      */
     public function testupstreamMessageDistMonthly()
     {
@@ -204,7 +211,7 @@ class StatsStatsTest extends TestCase
     }
 
     /**
-     * Test interfaceSummary()
+     * Test interfaceSummary().
      */
     public function testinterfaceSummary()
     {
@@ -217,7 +224,7 @@ class StatsStatsTest extends TestCase
     }
 
     /**
-     * Test interfaceSummaryHourly()
+     * Test interfaceSummaryHourly().
      */
     public function testinterfaceSummaryHourly()
     {

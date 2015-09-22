@@ -1,11 +1,20 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace {
     use EasyWeChat\Core\AccessToken;
+    use EasyWeChat\Core\Exceptions\HttpException;
     use EasyWeChat\Core\Http;
     use GuzzleHttp\Client;
     use GuzzleHttp\Psr7\Response;
-    use EasyWeChat\Core\Exceptions\HttpException;
 
     class CoreHttpTest extends TestCase
     {
@@ -18,7 +27,7 @@ namespace {
          */
         public function getGuzzleWithResponse($expected = null)
         {
-            $guzzle = Mockery::mock(Client::class);
+            $guzzle   = Mockery::mock(Client::class);
             $response = Mockery::mock(Response::class);
             $response->shouldReceive('getBody')->andReturn($expected);
             $guzzle->shouldReceive('request')->andReturn($response);
@@ -34,7 +43,7 @@ namespace {
             $this->assertEquals(null, $http->getToken());
 
             $token = Mockery::mock(AccessToken::class);
-            $http = new Http($this->getGuzzleWithResponse(), $token);
+            $http  = new Http($this->getGuzzleWithResponse(), $token);
             $this->assertEquals($token, $http->getToken());
         }
 
@@ -123,7 +132,7 @@ namespace {
          */
         public function testRequestWithToken()
         {
-            $http = new Http($this->getGuzzleWithResponse(json_encode(['foo' => 'bar'])));
+            $http  = new Http($this->getGuzzleWithResponse(json_encode(['foo' => 'bar'])));
             $token = \Mockery::mock(EasyWeChat\Core\AccessToken::class);
             $http->setToken($token);
 
@@ -131,21 +140,21 @@ namespace {
 
             $this->assertEquals(['foo' => 'bar'], $response);
 
-            $http = new Http($this->getGuzzleWithResponse('non-json content'));
+            $http     = new Http($this->getGuzzleWithResponse('non-json content'));
             $response = $http->request('http://overtrue.me', 'GET');
 
             $this->assertEquals('non-json content', $response);
         }
 
         /**
-         * Test get()
+         * Test get().
          */
         public function testGet()
         {
             $guzzle = Mockery::mock(Client::class);
-            $http = Mockery::mock(Http::class.'[request]', [$guzzle]);
+            $http   = Mockery::mock(Http::class.'[request]', [$guzzle]);
 
-            $http->shouldReceive('request')->andReturnUsing(function($url, $method, $body){
+            $http->shouldReceive('request')->andReturnUsing(function ($url, $method, $body) {
                 return compact('url', 'method', 'body');
             });
 
@@ -157,14 +166,14 @@ namespace {
         }
 
         /**
-         * Test post()
+         * Test post().
          */
         public function testPost()
         {
             $guzzle = Mockery::mock(Client::class);
-            $http = Mockery::mock(Http::class.'[request]', [$guzzle]);
+            $http   = Mockery::mock(Http::class.'[request]', [$guzzle]);
 
-            $http->shouldReceive('request')->andReturnUsing(function($url, $method, $body){
+            $http->shouldReceive('request')->andReturnUsing(function ($url, $method, $body) {
                 return compact('url', 'method', 'body');
             });
 
@@ -176,14 +185,14 @@ namespace {
         }
 
         /**
-         * Test json()
+         * Test json().
          */
         public function testJson()
         {
             $guzzle = Mockery::mock(Client::class);
-            $http = Mockery::mock(Http::class.'[request]', [$guzzle]);
+            $http   = Mockery::mock(Http::class.'[request]', [$guzzle]);
 
-            $http->shouldReceive('request')->andReturnUsing(function($url, $method, $body){
+            $http->shouldReceive('request')->andReturnUsing(function ($url, $method, $body) {
                 return compact('url', 'method', 'body');
             });
 
@@ -195,14 +204,14 @@ namespace {
         }
 
         /**
-         * Test upload()
+         * Test upload().
          */
         public function testUpload()
         {
             $guzzle = Mockery::mock(Client::class);
-            $http = Mockery::mock(Http::class.'[request]', [$guzzle]);
+            $http   = Mockery::mock(Http::class.'[request]', [$guzzle]);
 
-            $http->shouldReceive('request')->andReturnUsing(function($url, $method, $body){
+            $http->shouldReceive('request')->andReturnUsing(function ($url, $method, $body) {
                 return compact('url', 'method', 'body');
             });
 
@@ -224,7 +233,8 @@ namespace {
 }
 
 namespace EasyWeChat\Core {
-    function fopen($file, $mode = 'r') {
+    function fopen($file, $mode = 'r')
+    {
         return $file;
     }
 }

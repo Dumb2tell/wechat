@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Material.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -39,13 +43,13 @@ class Material
      */
     protected $allowTypes = ['image', 'voice', 'video', 'thumb', 'news_image'];
 
-    const API_GET = 'https://api.weixin.qq.com/cgi-bin/material/get_material';
-    const API_UPLOAD = 'https://api.weixin.qq.com/cgi-bin/material/add_material';
-    const API_DELETE = 'https://api.weixin.qq.com/cgi-bin/material/del_material';
-    const API_STATS = 'https://api.weixin.qq.com/cgi-bin/material/get_materialcount';
-    const API_LISTS = 'https://api.weixin.qq.com/cgi-bin/material/batchget_material';
-    const API_NEWS_UPLOAD = 'https://api.weixin.qq.com/cgi-bin/material/add_news';
-    const API_NEWS_UPDATE = 'https://api.weixin.qq.com/cgi-bin/material/update_news';
+    const API_GET               = 'https://api.weixin.qq.com/cgi-bin/material/get_material';
+    const API_UPLOAD            = 'https://api.weixin.qq.com/cgi-bin/material/add_material';
+    const API_DELETE            = 'https://api.weixin.qq.com/cgi-bin/material/del_material';
+    const API_STATS             = 'https://api.weixin.qq.com/cgi-bin/material/get_materialcount';
+    const API_LISTS             = 'https://api.weixin.qq.com/cgi-bin/material/batchget_material';
+    const API_NEWS_UPLOAD       = 'https://api.weixin.qq.com/cgi-bin/material/add_news';
+    const API_NEWS_UPDATE       = 'https://api.weixin.qq.com/cgi-bin/material/update_news';
     const API_NEWS_IMAGE_UPLOAD = 'https://api.weixin.qq.com/cgi-bin/media/uploadimg';
 
     /**
@@ -108,7 +112,7 @@ class Material
         $params = [
             'description' => json_encode(
                 [
-                    'title' => $title,
+                    'title'        => $title,
                     'introduction' => $description,
                 ]
             ),
@@ -146,7 +150,7 @@ class Material
     {
         $params = [
             'media_id' => $mediaId,
-            'index' => $index,
+            'index'    => $index,
             'articles' => isset($article['title']) ? $article : (isset($article[$index]) ? $article[$index] : []),
         ];
 
@@ -215,9 +219,9 @@ class Material
     public function lists($type, $offset = 0, $count = 20)
     {
         $params = [
-            'type' => $type,
+            'type'   => $type,
             'offset' => intval($offset),
-            'count' => min(20, $count),
+            'count'  => min(20, $count),
         ];
 
         return $this->http->json(self::API_LISTS, $params);

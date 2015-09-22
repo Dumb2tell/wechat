@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Messenger.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -17,9 +21,9 @@
 
 namespace EasyWeChat\Staff;
 
-use EasyWeChat\Core\Http;
 use EasyWeChat\Core\Exceptions\InvalidArgumentException;
 use EasyWeChat\Core\Exceptions\RuntimeException;
+use EasyWeChat\Core\Http;
 use EasyWeChat\Message\AbstractMessage;
 use EasyWeChat\Message\Text;
 
@@ -73,7 +77,7 @@ class Messenger
      */
     public function __construct(Http $http, Transformer $transformer)
     {
-        $this->http = $http->setExpectedException(StaffHttpException::class);
+        $this->http        = $http->setExpectedException(StaffHttpException::class);
         $this->transformer = $transformer;
     }
 
@@ -145,10 +149,10 @@ class Messenger
         $content = $this->transformer->transform($this->message);
 
         $message = [
-            'touser' => $this->to,
-            'msgtype' => $this->message->type,
+            'touser'             => $this->to,
+            'msgtype'            => $this->message->type,
             $this->message->type => $content,
-            'customservice' => ['kf_account' => $this->account],
+            'customservice'      => ['kf_account' => $this->account],
         ];
 
         return $this->http->json(self::API_MESSAGE_SEND, $message);

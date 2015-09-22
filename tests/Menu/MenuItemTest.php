@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use EasyWeChat\Menu\Item;
 
 class MenuItemTest extends TestCase
@@ -45,12 +54,12 @@ class MenuItemTest extends TestCase
             [
                 'name' => 'foo',
                 'type' => 'click',
-                'key' => 'foooooo',
+                'key'  => 'foooooo',
             ],
             [
                 'name' => 'bar',
                 'type' => 'view',
-                'url' => 'http://easywechat.org',
+                'url'  => 'http://easywechat.org',
             ],
         ];
         $this->assertEquals($excepted, $item['sub_button']);
@@ -66,7 +75,7 @@ class MenuItemTest extends TestCase
         $excepted = [
             'name' => 'foo',
             'type' => 'view',
-            'url' => 'http://overtrue.me',
+            'url'  => 'http://overtrue.me',
         ];
 
         $this->assertEquals($excepted, $item['sub_button'][0]);

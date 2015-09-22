@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * SignGenerator.php.
  *
@@ -44,7 +53,7 @@ class SignGenerator
      */
     public function __construct($key, $encryptMethod = 'md5')
     {
-        $this->key = $key;
+        $this->key           = $key;
         $this->encryptMethod = $encryptMethod;
     }
 

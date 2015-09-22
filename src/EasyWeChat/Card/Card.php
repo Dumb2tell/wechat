@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Card.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -19,8 +23,8 @@ namespace EasyWeChat\Card;
 
 use EasyWeChat\Cache\Manager as Cache;
 use EasyWeChat\Core\Http;
-use EasyWeChat\Support\Collection;
 use EasyWeChat\Support\Arr;
+use EasyWeChat\Support\Collection;
 
 /**
  * Class Card.
@@ -50,34 +54,34 @@ class Card
 
     // 卡券类型
     const TYPE_GENERAL_COUPON = 'GENERAL_COUPON';   // 通用券
-    const TYPE_GROUPON = 'GROUPON';          // 团购券
-    const TYPE_DISCOUNT = 'DISCOUNT';         // 折扣券
-    const TYPE_GIFT = 'GIFT';             // 礼品券
-    const TYPE_CASH = 'CASH';             // 代金券
-    const TYPE_MEMBER_CARD = 'MEMBER_CARD';      // 会员卡
-    const TYPE_SCENIC_TICKET = 'SCENIC_TICKET';    // 景点门票
-    const TYPE_MOVIE_TICKET = 'MOVIE_TICKET';     // 电影票
-    const TYPE_BOARDING_PASS = 'BOARDING_PASS';    // 飞机票
-    const TYPE_LUCKY_MONEY = 'LUCKY_MONEY';      // 红包
+    const TYPE_GROUPON        = 'GROUPON';          // 团购券
+    const TYPE_DISCOUNT       = 'DISCOUNT';         // 折扣券
+    const TYPE_GIFT           = 'GIFT';             // 礼品券
+    const TYPE_CASH           = 'CASH';             // 代金券
+    const TYPE_MEMBER_CARD    = 'MEMBER_CARD';      // 会员卡
+    const TYPE_SCENIC_TICKET  = 'SCENIC_TICKET';    // 景点门票
+    const TYPE_MOVIE_TICKET   = 'MOVIE_TICKET';     // 电影票
+    const TYPE_BOARDING_PASS  = 'BOARDING_PASS';    // 飞机票
+    const TYPE_LUCKY_MONEY    = 'LUCKY_MONEY';      // 红包
     const TYPE_MEETING_TICKET = 'MEETING_TICKET';   // 会议门票
 
-    const API_CREATE = 'https://api.weixin.qq.com/card/create';
-    const API_DELETE = 'https://api.weixin.qq.com/card/delete';
-    const API_GET = 'https://api.weixin.qq.com/card/get';
-    const API_UPDATE = 'https://api.weixin.qq.com/card/update';
-    const API_LIST = 'https://api.weixin.qq.com/card/batchget';
-    const API_CONSUME = 'https://api.weixin.qq.com/card/code/consume';
-    const API_UNAVAILABLE = 'https://api.weixin.qq.com/card/code/unavailable';
-    const API_CODE_GET = 'https://api.weixin.qq.com/card/code/get';
-    const API_CODE_UPDATE = 'https://api.weixin.qq.com/card/code/update';
-    const API_CODE_DECRYPT = 'https://api.weixin.qq.com/card/code/decrypt';
-    const API_UPDATE_STOCK = 'https://api.weixin.qq.com/card/modifystock';
-    const API_MEMBER_CARD_ACTIVE = 'https://api.weixin.qq.com/card/membercard/activate';
-    const API_MEMBER_CARD_TRADE = 'https://api.weixin.qq.com/card/membercard/updateuser';
-    const API_MOVIE_TICKET_UPDATE = 'https://api.weixin.qq.com/card/movieticket/updateuser';
+    const API_CREATE                = 'https://api.weixin.qq.com/card/create';
+    const API_DELETE                = 'https://api.weixin.qq.com/card/delete';
+    const API_GET                   = 'https://api.weixin.qq.com/card/get';
+    const API_UPDATE                = 'https://api.weixin.qq.com/card/update';
+    const API_LIST                  = 'https://api.weixin.qq.com/card/batchget';
+    const API_CONSUME               = 'https://api.weixin.qq.com/card/code/consume';
+    const API_UNAVAILABLE           = 'https://api.weixin.qq.com/card/code/unavailable';
+    const API_CODE_GET              = 'https://api.weixin.qq.com/card/code/get';
+    const API_CODE_UPDATE           = 'https://api.weixin.qq.com/card/code/update';
+    const API_CODE_DECRYPT          = 'https://api.weixin.qq.com/card/code/decrypt';
+    const API_UPDATE_STOCK          = 'https://api.weixin.qq.com/card/modifystock';
+    const API_MEMBER_CARD_ACTIVE    = 'https://api.weixin.qq.com/card/membercard/activate';
+    const API_MEMBER_CARD_TRADE     = 'https://api.weixin.qq.com/card/membercard/updateuser';
+    const API_MOVIE_TICKET_UPDATE   = 'https://api.weixin.qq.com/card/movieticket/updateuser';
     const API_BOARDING_PASS_CHECKIN = 'https://api.weixin.qq.com/card/boardingpass/checkin';
     const API_MEETING_TICKET_UPDATE = 'https://api.weixin.qq.com/card/meetingticket/updateuser';
-    const API_TICKET = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=wx_card';
+    const API_TICKET                = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=wx_card';
 
     /**
      * Constructor.
@@ -87,7 +91,7 @@ class Card
      */
     public function __construct(Http $http, Cache $cache)
     {
-        $this->http = $http->setExpectedException(CardHttpException::class);
+        $this->http  = $http->setExpectedException(CardHttpException::class);
         $this->cache = $cache;
     }
 
@@ -129,11 +133,11 @@ class Card
         $timestamp = time();
 
         $ext = [
-                'code' => Arr::get($extension, 'code'),
-                'openid' => Arr::get($extension, 'openid', Arr::get($extension, 'open_id')),
+                'code'      => Arr::get($extension, 'code'),
+                'openid'    => Arr::get($extension, 'openid', Arr::get($extension, 'open_id')),
                 'timestamp' => $timestamp,
-                'outer_id' => Arr::get($extension, 'outer_id'),
-                'balance' => Arr::get($extension, 'balance'),
+                'outer_id'  => Arr::get($extension, 'outer_id'),
+                'balance'   => Arr::get($extension, 'balance'),
                ];
 
         $ext['signature'] = $this->getSignature(
@@ -146,7 +150,7 @@ class Card
         );
 
         return [
-                'card_id' => $cardId,
+                'card_id'  => $cardId,
                 'card_ext' => json_encode($ext, JSON_UNESCAPED_UNICODE),
                ];
     }
@@ -162,12 +166,12 @@ class Card
      */
     public function create(array $base, array $properties = [], $type = self::GENERAL_COUPON)
     {
-        $key = strtolower($type);
-        $card = array_merge(['base_info' => $base], $properties);
+        $key    = strtolower($type);
+        $card   = array_merge(['base_info' => $base], $properties);
         $params = [
                    'card' => [
                               'card_type' => $type,
-                              $key => $card,
+                              $key        => $card,
                              ],
                   ];
 
@@ -204,12 +208,12 @@ class Card
      */
     public function update($cardId, $type, array $base = [], array $data = [])
     {
-        $key = strtolower($type);
+        $key  = strtolower($type);
         $card = array_merge(['base_info' => $base], $data);
 
         $params = [
                    'card_id' => $cardId,
-                   $key => $card,
+                   $key      => $card,
                   ];
 
         return $this->http->json(self::API_UPDATE, $params);
@@ -227,7 +231,7 @@ class Card
     {
         $params = [
                    'offset' => $offset,
-                   'count' => $count,
+                   'count'  => $count,
                   ];
 
         $result = $this->http->json(self::API_LIST, $params);
@@ -246,7 +250,7 @@ class Card
     public function consume($code, $cardId = null)
     {
         $params = [
-                   'code' => $code,
+                   'code'    => $code,
                    'card_id' => $cardId,
                   ];
 
@@ -264,7 +268,7 @@ class Card
     public function disable($code, $cardId = null)
     {
         $params = [
-                   'code' => $code,
+                   'code'    => $code,
                    'card_id' => $cardId,
                   ];
 
@@ -303,7 +307,7 @@ class Card
 
         $params = [
                    'card_id' => $cardId,
-                   $key => abs($amount),
+                   $key      => abs($amount),
                   ];
 
         return $this->http->json(self::API_UPDATE_STOCK, $params);
@@ -346,7 +350,7 @@ class Card
     public function getCode($code, $cardId = null)
     {
         $params = [
-                   'code' => $code,
+                   'code'    => $code,
                    'card_id' => $cardId,
                   ];
 
@@ -365,8 +369,8 @@ class Card
     public function updateCode($code, $newCode, $cardId)
     {
         $params = [
-                   'code' => $code,
-                   'card_id' => $cardId,
+                   'code'     => $code,
+                   'card_id'  => $cardId,
                    'new_code' => $newCode,
                   ];
 

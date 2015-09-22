@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * File.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -29,13 +33,13 @@ class File
      */
     protected static $extensions = [
         '255216' => 'jpg',
-        '13780' => 'png',
-        '7173' => 'gif',
-        '6677' => 'bmp',
-        '7368' => 'mp3',
-        '3533' => 'amr',
-        '8273' => 'wav',
-        '4838' => 'wma',
+        '13780'  => 'png',
+        '7173'   => 'gif',
+        '6677'   => 'bmp',
+        '7368'   => 'mp3',
+        '3533'   => 'amr',
+        '8273'   => 'wav',
+        '4838'   => 'wma',
     ];
 
     /**

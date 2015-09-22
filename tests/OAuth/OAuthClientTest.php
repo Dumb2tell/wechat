@@ -1,11 +1,20 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use EasyWeChat\OAuth\User;
 
 class OAuthUserTest extends TestCase
 {
     /**
-     * Test getOpenId()
+     * Test getOpenId().
      */
     public function testGetOpenId()
     {
@@ -15,7 +24,7 @@ class OAuthUserTest extends TestCase
     }
 
     /**
-     * Test getNickname()
+     * Test getNickname().
      */
     public function testGetNickName()
     {
@@ -27,7 +36,7 @@ class OAuthUserTest extends TestCase
     }
 
     /**
-     * Test getAvatar()
+     * Test getAvatar().
      */
     public function testGetAvatar()
     {
@@ -37,7 +46,7 @@ class OAuthUserTest extends TestCase
     }
 
     /**
-     * Test setToken() and getToken()
+     * Test setToken() and getToken().
      */
     public function testTokenGetterAndSetter()
     {
@@ -49,7 +58,7 @@ class OAuthUserTest extends TestCase
     }
 
     /**
-     * Test setRefreshToken() and getRefreshToken()
+     * Test setRefreshToken() and getRefreshToken().
      */
     public function testRefreshTokenGetterAndSetter()
     {

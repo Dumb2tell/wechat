@@ -1,15 +1,24 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use EasyWeChat\Core\Http;
 use EasyWeChat\Payment\API;
-use EasyWeChat\Payment\Order;
 use EasyWeChat\Payment\Merchant;
+use EasyWeChat\Payment\Order;
 use EasyWeChat\Support\XML;
 
 class PaymentAPITest extends TestCase
 {
     /**
-     * Build API instance
+     * Build API instance.
      *
      * @return API
      */
@@ -25,7 +34,7 @@ class PaymentAPITest extends TestCase
 
         $http = Mockery::mock(Http::class);
         $http->shouldReceive('setExpectedException')->andReturn($http);
-        $http->shouldReceive('post')->andReturnUsing(function($api, $params){
+        $http->shouldReceive('post')->andReturnUsing(function ($api, $params) {
             $params = XML::parse($params);
 
             return XML::build(compact('api', 'params'));
@@ -35,11 +44,11 @@ class PaymentAPITest extends TestCase
     }
 
     /**
-     * Test prepare()
+     * Test prepare().
      */
     public function testPrepare()
     {
-        $api = $this->getAPI();
+        $api   = $this->getAPI();
         $order = Mockery::mock(Order::class);
         $order->shouldReceive('all')->andReturn(['foo' => 'bar']);
 
@@ -52,11 +61,11 @@ class PaymentAPITest extends TestCase
     }
 
     /**
-     * Test query()
+     * Test query().
      */
     public function testQuery()
     {
-        $api = $this->getAPI();
+        $api      = $this->getAPI();
         $response = $api->query('testTradeNoFoo');
 
         $this->assertEquals(API::API_QUERY, $response['api']);
@@ -73,7 +82,7 @@ class PaymentAPITest extends TestCase
     }
 
     /**
-     * Test close()
+     * Test close().
      */
     public function testClose()
     {
@@ -85,7 +94,7 @@ class PaymentAPITest extends TestCase
     }
 
     /**
-     * Test reverse()
+     * Test reverse().
      */
     public function testReverse()
     {
@@ -101,7 +110,7 @@ class PaymentAPITest extends TestCase
     }
 
     /**
-     * Test refund
+     * Test refund.
      */
     public function testRefund()
     {
@@ -127,7 +136,7 @@ class PaymentAPITest extends TestCase
     }
 
     /**
-     * Test queryRefund()
+     * Test queryRefund().
      */
     public function testQueryRefund()
     {
@@ -143,7 +152,7 @@ class PaymentAPITest extends TestCase
     }
 
     /**
-     * Test downloadBill()
+     * Test downloadBill().
      */
     public function testDownloadBill()
     {
@@ -161,7 +170,7 @@ class PaymentAPITest extends TestCase
     }
 
     /**
-     * Test urlShorten()
+     * Test urlShorten().
      */
     public function testUrlShorten()
     {
@@ -174,11 +183,11 @@ class PaymentAPITest extends TestCase
     }
 
     /**
-     * Test setMerchant() and getMerchant
+     * Test setMerchant() and getMerchant.
      */
     public function testMerchantGetterAndSetter()
     {
-        $api = $this->getAPI();
+        $api      = $this->getAPI();
         $merchant = Mockery::mock(Merchant::class);
         $api->setMerchant($merchant);
 

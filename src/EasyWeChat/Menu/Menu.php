@@ -1,12 +1,16 @@
 <?php
 
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 /**
  * Menu.php.
- *
- * Part of EasyWeChat.
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
  *
  * @author    overtrue <i@overtrue.me>
  * @copyright 2015 overtrue <i@overtrue.me>
@@ -28,9 +32,9 @@ use EasyWeChat\Support\Collection;
 class Menu
 {
     const API_CREATE = 'https://api.weixin.qq.com/cgi-bin/menu/create';
-    const API_GET = 'https://api.weixin.qq.com/cgi-bin/menu/get';
+    const API_GET    = 'https://api.weixin.qq.com/cgi-bin/menu/get';
     const API_DELETE = 'https://api.weixin.qq.com/cgi-bin/menu/delete';
-    const API_QUERY = 'https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info';
+    const API_QUERY  = 'https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info';
 
     /**
      * Http client.

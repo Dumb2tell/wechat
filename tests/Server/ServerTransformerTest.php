@@ -1,12 +1,21 @@
 <?php
 
-use EasyWeChat\Message\Text;
-use EasyWeChat\Message\Image;
-use EasyWeChat\Message\Video;
-use EasyWeChat\Message\Voice;
-use EasyWeChat\Message\Transfer;
+/*
+ * This file is part of the EasyWeChat.
+ *
+ * (c) overtrue <i@overtrue.me>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 use EasyWeChat\Message\Article;
 use EasyWeChat\Message\Articles;
+use EasyWeChat\Message\Image;
+use EasyWeChat\Message\Text;
+use EasyWeChat\Message\Transfer;
+use EasyWeChat\Message\Video;
+use EasyWeChat\Message\Voice;
 use EasyWeChat\Server\Transformer;
 
 class ServerTransformerTest extends TestCase
@@ -85,11 +94,11 @@ class ServerTransformerTest extends TestCase
 
         $articles = [
             new Article([
-                'author' => 'overtrue',
+                'author'      => 'overtrue',
                 'description' => 'foobar',
             ]),
             new Article([
-                'author' => 'foo',
+                'author'      => 'foo',
                 'description' => 'bar',
             ]),
         ];
