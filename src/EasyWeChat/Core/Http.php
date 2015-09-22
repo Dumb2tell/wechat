@@ -234,7 +234,7 @@ class Http
             return $response;
         }
 
-        if (isset($contents['errcode']) && 0 !== $contents['errcode']) {
+        if (isset($contents['errcode']) && 0 != $contents['errcode']) {
             if (empty($contents['errmsg'])) {
                 $contents['errmsg'] = 'Unknown';
             }
